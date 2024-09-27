@@ -44,6 +44,32 @@ void inserirFilmeDesc(Descritor *ld){
    ld->n++;
 }
 
+void inserirFilmeDescFile(Descritor *ld, Filme *filmeTemp){
+   NoDesc *cursor = ld->prim;
+   NoDesc *ant = NULL;
+
+   //Percorre a Lista Descritora até cursor ser nulo (fim da lista), ou até achar um nó cujo filme seja "alfabeticamente" superior ao filme filmeTemp (filmeTemp->nomeFilme < cursor->filme->nomeFilme)
+   while(cursor != NULL && (strcmp(filmeTemp->nomeFilme, cursor->info->nomeFilme) > 0))
+   {
+      ant = cursor;
+      cursor = cursor->prox;  
+   }
+   
+   //Cria um novo nó com o filme filmeTemp
+   NoDesc *novo = (NoDesc*) malloc(sizeof(NoDesc));
+   novo->info = filmeTemp;
+   novo->prox = cursor;
+   
+   //Caso seja inserido na primeira posição, o ponteiro da lista apontará ao novo nó. Caso contrário, o anterior apontará ao novo nó
+   if(ant == NULL) 
+      ld->prim = novo;
+   else
+      ant->prox = novo;
+
+   //Aumenta o numero de elementos do Descritor
+   ld->n++;
+}
+
 void alterarFilmeDesc(Descritor *ld, int id) {
    if(estaVaziaDesc(ld)) { //Checar se a lista esta vazia!
       printf("\nERR: Lista vazia!\n");
