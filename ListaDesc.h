@@ -25,6 +25,9 @@ int estaVaziaDesc(Descritor *ld);
 //Função de inserção na lista descritora
 void inserirFilmeDesc(Descritor *ld);
 
+//Função de inserção na lista descritora para arquivo
+void inserirFilmeDescFile(Descritor *ld, struct filme *filmeTemp);
+
 //Função que permite a alteração de um filme da lista
 void alterarFilmeDesc(Descritor *ld, int id);
 

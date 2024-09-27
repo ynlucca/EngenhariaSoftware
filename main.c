@@ -4,11 +4,14 @@
 #include "Filme.h"
 #include "ListaDup.h"
 #include "ListaDesc.h"
+#include "File.h"
 
 int main() {
-
    int escolha, val;
    Descritor desc = criarDescritor();
+   FILE *file;
+
+   fileLoad(file, &desc, &numFilme);
 
    do {
       system("clear");
@@ -71,6 +74,9 @@ int main() {
             printf("\nDigite o ID unico do filme para imprimir seu sucessor: ");
             scanf("%d", &val);
             imprimirSucDup(&desc, val);
+            break;
+         case 10:
+            fileWrite(file, &desc);
             break;
          default:
             break;

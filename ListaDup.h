@@ -19,6 +19,9 @@ int estaVaziaDup(NoDup *nd);
 //Função que insere uma sequência ao filme principal
 void inserirFilmeDup(struct descritor *ld, int id);
 
+//Função que insere uma sequência ao filme principal para arquivo
+void inserirFilmeDupFile(struct descritor *ld, int id, struct filme *tempFilme);
+
 //Função que imprime as sequências de um filme
 void imprimirFilmesDup(struct descritor *ld, int id);
 

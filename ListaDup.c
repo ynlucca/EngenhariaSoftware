@@ -50,6 +50,46 @@ void inserirFilmeDup(struct descritor *ld, int id) {
    ld->n++;
 }
 
+void inserirFilmeDupFile(struct descritor *ld, int id, Filme *tempFilme) {
+   if(estaVaziaDesc(ld)) { //Checar se a lista esta vazia!
+      printf("\nERR: Lista vazia!\n");
+      setbuf(stdin, NULL);
+      printf("\nPressione algo para continuar...");
+      getchar();
+      return;
+   }
+
+   NoDesc *cursor_1 = ld->prim;
+   NoDup *cursor_2 = NULL;
+
+   for (cursor_1; cursor_1->prox != NULL && cursor_1->info->idFilme != id; cursor_1 = cursor_1->prox);
+
+   if (cursor_1->info->idFilme != id || cursor_1 == NULL) {
+      printf("\nERR: Filme para iniciar sequencia nao encontrado!\n");
+      setbuf(stdin, NULL);
+      printf("\nPressione algo para continuar...");
+      getchar();
+      return;
+   }
+
+   NoDup *novo = (NoDup*) malloc(sizeof(NoDup));
+   novo->info = tempFilme;
+
+   if (cursor_1->info->seqFilme == NULL) {
+      cursor_1->info->seqFilme = novo;
+      novo->ant = NULL;
+      novo->prox = NULL;
+   } else {
+      cursor_2 = cursor_1->info->seqFilme;
+      for (cursor_2; cursor_2->prox != NULL; cursor_2 = cursor_2->prox); 
+      cursor_2->prox = novo;
+      novo->prox = NULL;
+      novo->ant = cursor_2;
+   }
+
+   ld->n++;
+}
+
 void imprimirFilmesDup(struct descritor *ld, int id) {
    if(estaVaziaDesc(ld)) { //Checar se a lista esta vazia!
       printf("\nERR: Lista vazia!\n");
@@ -231,7 +271,7 @@ void imprimirSucDup(struct descritor *ld, int id) {
    for(cursor_1; cursor_1 != NULL; cursor_1 = cursor_1->prox)
    {
       if (cursor_1->info->idFilme == id) {
-         if (cursor_1->prox == NULL) {
+         if (cursor_1->info->seqFilme == NULL) {
             printf("\nERR: O filme < %s > nao possui sucessor...\n", cursor_1->info->nomeFilme);
             setbuf(stdin, NULL);
             printf("\nPressione algo para continuar...");
